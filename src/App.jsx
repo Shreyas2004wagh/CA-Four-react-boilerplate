@@ -9,7 +9,9 @@ import QuestionBox from "./components/QuestionBox";
 function App() {
 
   return (
-    <div>
+    <div className="App">
+      <QuestionBox/>
+      
       
     </div>
   );
