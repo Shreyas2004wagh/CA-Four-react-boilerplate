@@ -1,19 +1,29 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import questions from "./questions";
-import Result from "./components/Result";
-import QuestionBox from "./components/QuestionBox";
-
-
+import React, { useState } from 'react';
+import './App.css';
+import QuestionBox from './components/QuestionBox';
+import Result from './components/Result';
 
 function App() {
+  const [showComponent, setShowComponent] = useState(true);
+  const [score, setScore] = useState(0);
 
   return (
-    <div className="App">
-      <QuestionBox/>
-      
-      
-    </div>
+    <>
+      {showComponent ? (
+        <QuestionBox
+          showResult={() => setShowComponent(false)}
+          updateScore={() => setScore((prevScore) => prevScore + 1)}
+        />
+      ) : (
+        <Result
+          restartQuiz={() => {
+            setScore(0);
+            setShowComponent(true);
+          }}
+          score={score}
+        />
+      )}
+    </>
   );
 }
 

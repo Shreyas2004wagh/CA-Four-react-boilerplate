@@ -13,30 +13,29 @@ function QuestionBox(props) {
       highlightRef.current.style.color = 'black';
     }
   };
-  const handleClick = (isCorrect) => {
-    if (isCorrect) {
+
+  const handleClick = (value) => {
+    if (value) {
       props.updateScore();
     }
-    setCount((prevCount) => (prevCount < questions.length - 1 ? prevCount + 1 : prevCount));
+    count !== questions.length - 1 ? setCount(count + 1) : setTimeout(props.showResult, 500);
   };
-  
 
   const options = questions[count].options;
 
   return (
     <div id='main'>
-        <nav id='nav'>
-            <div>
-                Kalvium
-            </div>
-            <button>
-                light
-            </button>
-        </nav>
+      <div id='nav'>
+        <div>Kalvium</div>
+        <div>
+          <button>
+            Light
+          </button>
+        </div>
+      </div>
       <div id='Quiz'>
         <p>{`Question (${count + 1} of ${questions.length})`}</p>
-
-        <p>{questions[count].text}</p>
+        <p ref={highlightRef}>{questions[count].text}</p>
         <div id='options'>
           {options.map((item) => {
             const handleButtonClick = () => handleClick(item.isCorrect);
@@ -48,7 +47,7 @@ function QuestionBox(props) {
             );
           })}
         </div>
-        <div>
+        <div id='navBtn'>
           <button onClick={() => handleHighlight('highlight')} id='highlight'>
             Highlight
           </button>
