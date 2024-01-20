@@ -4,13 +4,14 @@ import './QuestionBox.css';
 
 function QuestionBox(props) {
   const [count, setCount] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const highlightRef = useRef();
 
   const handleHighlight = (clicked) => {
     if (clicked === 'highlight') {
-      highlightRef.current.style.color = 'blue';
+      highlightRef.current.style.color = isDarkMode ? 'blue' : 'red';
     } else {
-      highlightRef.current.style.color = 'black';
+      highlightRef.current.style.color = isDarkMode ? 'red' :'blue';
     }
   };
 
@@ -18,24 +19,28 @@ function QuestionBox(props) {
     if (value) {
       props.updateScore();
     }
-    count !== questions.length - 1 ? setCount(count + 1) : setTimeout(props.showResult, 500);
+    count !== questions.length - 1 ? setCount(count + 1) : setTimeout(props.showResult);
   };
 
+  const handleToggleMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
+  
   const options = questions[count].options;
 
   return (
-    <div id='main'>
+    <div id='main' className={isDarkMode ? 'dark-mode' : ''}>
       <div id='nav'>
         <div>Kalvium</div>
         <div>
-          <button>
-            Light
+          <button onClick={handleToggleMode}>
+            {isDarkMode ? 'Light' : 'Dark'}
           </button>
         </div>
       </div>
       <div id='Quiz'>
-        <p>{`Question (${count + 1} of ${questions.length})`}</p>
-        <p ref={highlightRef}>{questions[count].text}</p>
+        <p id='question'>{`Question : ${count + 1} of ${questions.length}`}</p>
+        <h1 ref={highlightRef}>{questions[count].text}</h1>
         <div id='options'>
           {options.map((item) => {
             const handleButtonClick = () => handleClick(item.isCorrect);
