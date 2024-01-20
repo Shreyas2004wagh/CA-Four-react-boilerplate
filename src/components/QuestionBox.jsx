@@ -2,9 +2,11 @@ import { useRef, useState } from 'react';
 import questions from '../questions';
 import './QuestionBox.css';
 
+//importing
+
 function QuestionBox(props) {
   const [count, setCount] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);//dark mode state
   const highlightRef = useRef();
 
   const handleHighlight = (clicked) => {
@@ -14,6 +16,7 @@ function QuestionBox(props) {
       highlightRef.current.style.color = isDarkMode ? 'red' :'blue';
     }
   };
+  //for highlighting question
 
   const handleClick = (value) => {
     if (value) {
@@ -25,11 +28,12 @@ function QuestionBox(props) {
   const handleToggleMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
-  
+  //for handling dark and light modes
   const options = questions[count].options;
 
   return (
     <div id='main' className={isDarkMode ? 'dark-mode' : ''}>
+      {/* dark and light mode */}
       <div id='nav'>
         <div>Kalvium</div>
         <div>
@@ -44,6 +48,7 @@ function QuestionBox(props) {
         <div id='options'>
           {options.map((item) => {
             const handleButtonClick = () => handleClick(item.isCorrect);
+            //checking
             return (
               <button className='option' key={item.id} onClick={handleButtonClick}>
                 <span>{item.option}</span>
@@ -51,8 +56,9 @@ function QuestionBox(props) {
               </button>
             );
           })}
-        </div>
-        <div id='navBtn'>
+        </div> 
+        <div id='navBtn'>   
+        {/* navbar */}
           <button onClick={() => handleHighlight('highlight')} id='highlight'>
             Highlight
           </button>
@@ -64,5 +70,5 @@ function QuestionBox(props) {
     </div>
   );
 }
-
+//exporting
 export default QuestionBox;
